@@ -19,9 +19,16 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.example.ecomdemo.Routes
+import com.example.ecomdemo.common.Validation
 
 @Composable
-fun SignUp(navController: NavHostController) {
+fun SellerSignUp(navController: NavHostController) {
+
+    val validation = Validation()
+    var isNameValid: Boolean
+    var isNumValid: Boolean
+    var isPassValid: Boolean
+
     Column(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
@@ -31,7 +38,7 @@ fun SignUp(navController: NavHostController) {
         val mobileNumber = remember { mutableStateOf(TextFieldValue()) }
         val password = remember { mutableStateOf(TextFieldValue()) }
 
-        Text(text = "Sign In", style = TextStyle(fontSize = 40.sp))
+        Text(text = "Seller Sign Up", style = TextStyle(fontSize = 40.sp))
 
         Spacer(modifier = Modifier.height(20.dp))
         TextField(
@@ -57,13 +64,24 @@ fun SignUp(navController: NavHostController) {
         Spacer(modifier = Modifier.height(20.dp))
         Box(modifier = Modifier.padding(40.dp, 0.dp, 40.dp, 0.dp)) {
             Button(
-                onClick = { navController.navigate(Routes.Login.route)},
+                onClick = {
+                    isNameValid = validation.validateName(username.value.text)
+                    isNumValid = validation.validatePhone(mobileNumber.value.text)
+                    isPassValid = validation.validatePass(password.value.text)
+
+                    if(isNameValid && isNumValid && isPassValid){
+                        navController.navigate(Routes.Login.route){
+                            popUpTo(Routes.SellerSignUp.route) { inclusive = true }
+                            launchSingleTop = true
+                        }
+                    }
+                    },
                 shape = RoundedCornerShape(50.dp),
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(50.dp)
             ) {
-                Text(text = "Sign In")
+                Text(text = "Sign Up")
             }
         }
     }
