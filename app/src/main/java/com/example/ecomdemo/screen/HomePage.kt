@@ -22,7 +22,7 @@ import com.example.ecomdemo.model.Product
 
 
 @Composable
-fun HomePage(navController: NavHostController, products: List<Product>){
+fun HomePage(navController: NavHostController, products: MutableList<Product>){
     Column {
         TopBar(navController)
         ProductList(products)
@@ -52,7 +52,7 @@ fun TopBar(navController: NavHostController){
     }
 }
 @Composable
-fun ProductList(products: List<Product>) {
+fun ProductList(products: MutableList<Product>) {
 
     LazyColumn {
         items(products) { product ->

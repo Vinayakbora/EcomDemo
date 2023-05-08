@@ -1,6 +1,8 @@
 package com.example.ecomdemo.screen
 
+import android.annotation.SuppressLint
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateListOf
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -11,10 +13,11 @@ import com.example.ecomdemo.model.Product
 const val description = "This text field will include product description"
 const val details = "This text field will include product description"
 
+@SuppressLint("UnrememberedMutableState")
 @Composable
 fun ScreenMain(){
     val navController = rememberNavController()
-    val productList = listOf(
+    val productList = mutableListOf(
         Product("Fruits", description, "₹100", R.drawable.fruit),
         Product("Vegetables", description, "₹100", R.drawable.vegetables),
         Product("Meat", description, "₹100", R.drawable.meat),
@@ -27,7 +30,7 @@ fun ScreenMain(){
         Product("Eggs", description, "₹100", R.drawable.eggcarton),
     )
 
-    val cartList = listOf(
+    val cartList = mutableStateListOf(
         Product("Fruits", details, "₹100", R.drawable.fruit),
         Product("Cold Drinks", details, "₹100", R.drawable.colddrinks),
         Product("Vegetables", description, "₹100", R.drawable.vegetables),
