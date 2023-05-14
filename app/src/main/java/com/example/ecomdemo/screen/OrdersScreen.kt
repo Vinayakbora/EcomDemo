@@ -5,8 +5,6 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -16,53 +14,49 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavHostController
-import com.example.ecomdemo.Routes
 import com.example.ecomdemo.model.Product
-
+import com.example.ecomdemo.ui.theme.LightGreen1
 
 @Composable
-fun HomePage(navController: NavHostController, products: MutableList<Product>){
+fun OrdersScreen(products: MutableList<Product>) {
     Column {
-        TopBar(navController)
-        ProductList(products)
+        OrderBar()
+        OrderSummary(products)
     }
 }
+
 @Composable
-fun TopBar(navController: NavHostController){
+fun OrderBar() {
     Row(
         Modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.SpaceBetween
     ) {
         Text(
-            text = "PRODUCTS",
+            text = "MY ORDERS",
             fontSize = 20.sp,
             textAlign = TextAlign.Center,
             style = TextStyle(fontWeight = FontWeight.Bold),
-            modifier = Modifier.padding(16.dp).wrapContentWidth()
+            modifier = Modifier
+                .padding(16.dp)
+                .wrapContentWidth()
         )
-        IconButton(
-            onClick = { navController.navigate(Routes.Cart.route)  }
-        ) {
-            Icon(
-                Icons.Filled.ShoppingCart,
-                contentDescription = null,
-                modifier = Modifier.size(64.dp).padding(16.dp))
-        }
     }
 }
-@Composable
-fun ProductList(products: MutableList<Product>) {
 
-    LazyColumn {
+@Composable
+fun OrderSummary(products: MutableList<Product>) {
+    LazyColumn(contentPadding = PaddingValues(bottom = 200.dp)) {
         items(products) { product ->
             Card(
+                elevation = 3.dp,
                 modifier = Modifier
                     .fillMaxWidth()
                     .wrapContentHeight()
                     .padding(16.dp)
             ) {
-                Row(horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically){
+                Row(
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
                     Image(
                         painter = painterResource(id = product.imageId),
                         contentDescription = "Product",
@@ -71,29 +65,29 @@ fun ProductList(products: MutableList<Product>) {
                     Column(horizontalAlignment = Alignment.CenterHorizontally) {
                         Text(
                             text = product.name,
+                            textAlign = TextAlign.Center,
                             style = TextStyle(fontWeight = FontWeight.Bold),
-                            modifier = Modifier.padding(0.dp,16.dp,20.dp,10.dp)
+                            modifier = Modifier.padding(10.dp).width(100.dp)
                         )
-                        Text(
-                            text = product.details,
-                            fontSize = 12.sp,
-                            modifier = Modifier
-                                .padding(16.dp)
-                                .width(110.dp)
-                        )
-                    }
-                    Column(horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center) {
                         Text(
                             text = product.price,
+                            textAlign = TextAlign.Center,
                             style = TextStyle(fontWeight = FontWeight.Bold),
-                            modifier = Modifier.padding(16.dp)
+                            modifier = Modifier.padding(10.dp)
                         )
-                        Button(onClick = {}, modifier = Modifier.padding(5.dp)) {
-                                Text(text = "Add",fontSize = 12.sp)
-                        }
                     }
+                    Text(
+                        text = "DELIVERED",
+                        textAlign = TextAlign.End,
+                        fontSize = 15.sp,
+                        style = TextStyle(fontWeight = FontWeight.Bold, color = LightGreen1),
+                        modifier = Modifier
+                            .padding(16.dp)
+                            .wrapContentWidth()
+                    )
                 }
             }
         }
     }
 }
+

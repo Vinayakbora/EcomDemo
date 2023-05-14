@@ -10,30 +10,29 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.ecomdemo.model.Product
+import com.example.ecomdemo.R
 import com.example.ecomdemo.ui.theme.DarkGrey
 import com.example.ecomdemo.ui.theme.LightGreen2
 import com.example.ecomdemo.ui.theme.RoseRed
-
+import com.example.ecomdemo.ui.viewmodels.MainViewModel
 
 @Composable
-fun CartPage(products: MutableList<Product>) {
-    Scaffold(bottomBar = { CartSummary() }) {
+fun CartScreen(mainViewModel: MainViewModel) {
+    Scaffold(bottomBar = { CartSummary(mainViewModel) }) {
         it.calculateBottomPadding()
         Column {
             CartBar()
-            ProductSummary(products)
-            CartSummary()
+            ProductSummary(mainViewModel)
+            CartSummary(mainViewModel)
         }
     }
 }
@@ -56,10 +55,12 @@ fun CartBar() {
 }
 
 @Composable
-fun ProductSummary(products: MutableList<Product>) {
+fun ProductSummary(mainViewModel: MainViewModel) {
+
+    val cartProducts = mainViewModel.cartItems
 
     LazyColumn(contentPadding = PaddingValues(bottom = 200.dp)) {
-        items(products) { product ->
+        items(cartProducts) { product ->
             Card(
                 elevation = 3.dp,
                 modifier = Modifier
@@ -72,55 +73,74 @@ fun ProductSummary(products: MutableList<Product>) {
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Image(
-                        painter = painterResource(id = product.imageId),
+                        painter = painterResource(R.drawable.mobile),
                         contentDescription = "Product",
                         modifier = Modifier.padding(16.dp)
                     )
-                    Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                        Text(
-                            text = product.name,
-                            style = TextStyle(fontWeight = FontWeight.Bold),
-                            modifier = Modifier.padding(0.dp, 16.dp, 20.dp, 10.dp)
-                        )
-
-                        var count by remember { mutableStateOf(1) }
+                    Column(
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        modifier = Modifier.wrapContentHeight().padding(16.dp)
+                    ) {
+                        product.name?.let {
+                            Text(
+                                text = it,
+                                textAlign = TextAlign.Center,
+                                style = TextStyle(fontWeight = FontWeight.Bold),
+                                modifier = Modifier
+                                    .padding(horizontal = 20.dp, vertical = 10.dp)
+                                    .width(100.dp)
+                            )
+                        }
 
                         Row(
                             horizontalArrangement = Arrangement.SpaceBetween,
                             verticalAlignment = Alignment.CenterVertically,
                         ) {
                             OutlinedButton(
-                                onClick = { if (count > 1) count-- },
+                                onClick = {
+                                    mainViewModel.totalPrice.value =
+                                        mainViewModel.totalPrice.value - product.price
+                                    when {
+                                        product.quantity > 1 -> {
+                                            product.decreaseQuantity()
+                                        }
+                                        product.quantity == 1 -> {
+                                            cartProducts.remove(product)
+                                        }
+                                    }
+                                },
                                 border = BorderStroke(1.dp, RoseRed),
                                 colors = ButtonDefaults.outlinedButtonColors(contentColor = RoseRed),
-                                modifier= Modifier.size(36.dp),
+                                modifier = Modifier.size(36.dp),
                                 shape = CircleShape,
                                 contentPadding = PaddingValues(0.dp)
-                            ){
+                            ) {
                                 Text(
-                                    text = "-",
-                                    fontSize = 16.sp,
-                                    color = DarkGrey
+                                    text = "-", fontSize = 16.sp, color = DarkGrey
                                 )
                             }
                             Text(
-                                text = count.toString(),
+                                text = product.mutableQuantity.value.toString(),
                                 fontWeight = FontWeight.Bold,
                                 fontSize = 16.sp,
                                 modifier = Modifier.padding(horizontal = 8.dp)
                             )
                             OutlinedButton(
-                                onClick = { if (count < 10) count++ },
+                                onClick = {
+                                    mainViewModel.totalPrice.value =
+                                        mainViewModel.totalPrice.value + product.price
+                                    when {
+                                        product.quantity < 10 -> product.increaseQuantity()
+                                    }
+                                },
                                 border = BorderStroke(1.dp, LightGreen2),
                                 colors = ButtonDefaults.outlinedButtonColors(contentColor = LightGreen2),
-                                modifier= Modifier.size(36.dp),
+                                modifier = Modifier.size(36.dp),
                                 shape = CircleShape,
                                 contentPadding = PaddingValues(0.dp)
                             ) {
                                 Text(
-                                    text = "+",
-                                    fontSize = 16.sp,
-                                    color = DarkGrey
+                                    text = "+", fontSize = 16.sp, color = DarkGrey
                                 )
                             }
                         }
@@ -129,13 +149,19 @@ fun ProductSummary(products: MutableList<Product>) {
                         horizontalAlignment = Alignment.CenterHorizontally,
                         verticalArrangement = Arrangement.Center
                     ) {
-                        IconButton(onClick = { products.remove(product) }) {
+                        IconButton(onClick = {
+                            mainViewModel.totalPrice.value =
+                                mainViewModel.totalPrice.value - (product.price * product.quantity)
+                            product.updateQuantity(0)
+                            cartProducts.remove(product)
+                        }
+                        ) {
                             Icon(Icons.Default.Delete, contentDescription = "Delete")
                         }
                         Text(
-                            text = product.price,
+                            text = "₹${product.price.toInt()}",
                             style = TextStyle(fontWeight = FontWeight.Bold),
-                            modifier = Modifier.padding(16.dp)
+                            modifier = Modifier.padding(10.dp).wrapContentWidth()
                         )
                     }
                 }
@@ -145,7 +171,7 @@ fun ProductSummary(products: MutableList<Product>) {
 }
 
 @Composable
-fun CartSummary() {
+fun CartSummary(mainViewModel: MainViewModel) {
     Box(
         contentAlignment = Alignment.BottomCenter, modifier = Modifier.fillMaxSize()
     ) {
@@ -170,7 +196,7 @@ fun CartSummary() {
                         modifier = Modifier.padding(0.dp, 20.dp, 0.dp, 10.dp)
                     )
                     Text(
-                        text = "₹500",
+                        text = "₹${mainViewModel.totalPrice.value}",
                         fontSize = 20.sp,
                         textAlign = TextAlign.End,
                         style = TextStyle(fontWeight = FontWeight.Bold),

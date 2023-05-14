@@ -3,46 +3,37 @@ package com.example.ecomdemo.screen
 import android.annotation.SuppressLint
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateListOf
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.dev.focus.ecomdemo.screen.*
+import com.example.ecomdemo.screen.viewmodels.SellerSignUpViewModel
+import com.example.ecomdemo.screen.viewmodels.UserSignUpViewModel
+import com.example.ecomdemo.ui.viewmodels.MainViewModel
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.navArgument
 import com.example.ecomdemo.R
 import com.example.ecomdemo.Routes
 import com.example.ecomdemo.model.Product
 
 const val description = "This text field will include product description"
-const val details = "This text field will include product description"
 
 @SuppressLint("UnrememberedMutableState")
 @Composable
-fun ScreenMain(){
+fun ScreenMain(mainViewModel: MainViewModel) {
     val navController = rememberNavController()
-    val productList = mutableListOf(
-        Product("Fruits", description, "₹100", R.drawable.fruit),
-        Product("Vegetables", description, "₹100", R.drawable.vegetables),
-        Product("Meat", description, "₹100", R.drawable.meat),
-        Product("Fish", description, "₹100", R.drawable.seafood),
-        Product("Milk", description, "₹100", R.drawable.waterbottle),
-        Product("Pastry", description, "₹100", R.drawable.pastry),
-        Product("Cold Drinks", description, "₹100", R.drawable.colddrinks),
-        Product("Bakery", description, "₹100", R.drawable.bakery),
-        Product("Snacks", description, "₹100", R.drawable.snacks),
-        Product("Eggs", description, "₹100", R.drawable.eggcarton),
-    )
 
     val cartList = mutableStateListOf(
-        Product("Fruits", details, "₹100", R.drawable.fruit),
-        Product("Cold Drinks", details, "₹100", R.drawable.colddrinks),
-        Product("Vegetables", description, "₹100", R.drawable.vegetables),
-        Product("Meat", description, "₹100", R.drawable.meat),
-        Product("Fish", description, "₹100", R.drawable.seafood),
-        Product("Bakery", details, "₹100", R.drawable.bakery)
+        Product("iPhone 13", description, "₹70,000", R.drawable.mobile),
+        Product("Google Pixel 6a", description, "₹50,000", R.drawable.mobile),
+        Product("Samsung Galaxy S21", description, "₹35,000", R.drawable.mobile)
     )
 
-    NavHost(navController = navController, startDestination = Routes.Login.route) {
+    NavHost(navController = navController, startDestination = Routes.LoginScreen.route) {
 
-        composable(Routes.Login.route) {
-            LoginPage(navController = navController)
+        composable(Routes.LoginScreen.route) {
+            LoginScreen(navController = navController, mainViewModel = mainViewModel)
         }
 
         composable(Routes.SignUpOption.route) {
@@ -50,7 +41,11 @@ fun ScreenMain(){
         }
 
         composable(Routes.UserSignUp.route) {
-            UserSignUp(navController = navController)
+            val viewModel = hiltViewModel<UserSignUpViewModel>()
+            val state = viewModel.state.value
+            UserSignUpScreen(navController = navController, state = state) { event ->
+                viewModel.onEvent(event)
+            }
         }
 
         composable(Routes.UserAddress.route) {
@@ -58,19 +53,49 @@ fun ScreenMain(){
         }
 
         composable(Routes.SellerSignUp.route) {
-            SellerSignUp(navController = navController)
+            val viewModel = hiltViewModel<SellerSignUpViewModel>()
+            val state = viewModel.state.value
+            SellerSignUpScreen(navController = navController, state = state) { event ->
+                viewModel.onEvent(event)
+            }
         }
 
         composable(Routes.Home.route) {
-            HomePage(navController = navController,productList)
+            HomeScreen(navController = navController, mainViewModel = mainViewModel)
+        }
+
+        composable(route = "${Routes.PDP.route}/{itemName}",
+            arguments = listOf(navArgument("itemName") {
+                type = NavType.StringType
+            })) { backStackEntry ->
+            backStackEntry.arguments?.getString("itemName")?.let { it ->
+                ProductDetailsScreen(it)
+            }
+        }
+
+        composable(Routes.SellerHome.route) {
+            SellerHomeScreen(mainViewModel = mainViewModel)
         }
 
         composable(Routes.Cart.route) {
-            CartPage(cartList)
+            CartScreen(mainViewModel = mainViewModel)
         }
 
         composable(Routes.Order.route) {
-            OrderPage(navController = navController)
+            OrdersScreen(cartList)
+        }
+
+        composable(Routes.UserList.route) {
+            mainViewModel._customerListState.value?.let { customerList ->
+                CustomerListScreen(customerList)
+            }
+        }
+
+        composable(Routes.SellerList.route) {
+            mainViewModel._sellerListState.value?.let { sellerList ->
+                SellerListScreen(sellerList)
+            }
         }
     }
+
 }

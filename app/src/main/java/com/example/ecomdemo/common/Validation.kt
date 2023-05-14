@@ -6,7 +6,7 @@ class Validation {
 
     private val nameRegex = "^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*\$"
     private val phoneRegex = "^\\d{10}\$"
-    private val passRegex = "^.{6,}\$"
+    private val emailRegex = "^[A-Za-z\\d._%+-]+@[A-Za-z\\d.-]+\\.[A-Za-z]{2,}\$"
 
     fun validateName(name: String): Boolean{
         return if (name.isNotEmpty()) {
@@ -24,10 +24,10 @@ class Validation {
         }
     }
 
-    fun validatePass(password: String): Boolean{
-        return if (password.isNotEmpty()) {
-            Pattern.matches(passRegex, password)
-        } else {
+    fun validateEmail(email: String): Boolean{
+        return if (email.isNotEmpty()){
+            Pattern.matches(emailRegex,email)
+        }else {
             false
         }
     }
@@ -47,5 +47,4 @@ class Validation {
     fun validatePincode(pinCode: String): Boolean{
         return pinCode.isNotEmpty()
     }
-
 }

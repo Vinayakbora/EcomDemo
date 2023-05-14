@@ -76,7 +76,7 @@ fun UserAddress(navController: NavHostController) {
                     isPincodeValid = validation.validatePincode(pinCode.value.text)
 
                     if(isAddress1Valid && isAddress2Valid && isAddress3Valid && isPincodeValid){
-                        navController.navigate(Routes.Login.route){
+                        navController.navigate(Routes.LoginScreen.route){
                             popUpTo(Routes.UserAddress.route) { inclusive = true }
                             launchSingleTop = true
                         }
