@@ -10,6 +10,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
@@ -17,6 +18,7 @@ import com.example.ecomdemo.common.OSTextField
 import com.dev.focus.ecomdemo.screen.events.UserSignUpUiEvent
 import com.example.ecomdemo.screen.states.UserSignUpUiState
 import com.example.ecomdemo.common.OSButton
+import com.example.ecomdemo.ui.theme.BlueGrotto
 import com.example.ecomdemo.ui.theme.USER_SUCCESS_MESSAGE
 
 @Composable
@@ -48,7 +50,10 @@ fun UserSignUpScreen(
                 },
             )
 
-        Text(text = "User Sign Up", style = TextStyle(fontSize = 40.sp))
+        Text(
+            text = "User Sign Up",
+            style = TextStyle(fontSize = 40.sp, color = BlueGrotto, fontWeight = FontWeight.Bold)
+        )
 
         OSTextField(
             value = state.firstName,

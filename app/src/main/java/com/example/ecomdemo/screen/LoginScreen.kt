@@ -1,6 +1,8 @@
 package com.example.ecomdemo.screen
 
+
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.text.ClickableText
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
@@ -8,15 +10,20 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
+import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.LifecycleOwner
 import androidx.navigation.NavHostController
 import com.example.ecomdemo.Routes
 import com.example.ecomdemo.common.OSButton
+import com.example.ecomdemo.ui.theme.BlueGrotto
 import com.example.ecomdemo.ui.viewmodels.MainViewModel
 
 @Composable
@@ -37,9 +44,19 @@ fun LoginScreen(
         val selectedOption = remember { mutableStateOf("User") }
         val mobileNumber = remember { mutableStateOf(TextFieldValue()) }
 
-        Text(text = "Login", style = TextStyle(fontSize = 40.sp))
+        Text(
+            text = "Login",
+            style = TextStyle(fontSize = 40.sp, color = BlueGrotto, fontWeight = FontWeight.Bold)
+        )
 
-        OutlinedTextField(label = { Text(text = "Mobile Number") },
+        OutlinedTextField(
+            label = { Text(text = "Mobile Number", color = BlueGrotto) },
+            colors = TextFieldDefaults.outlinedTextFieldColors(
+                textColor = Color.Black,
+                cursorColor = BlueGrotto,
+                focusedBorderColor = BlueGrotto,
+                unfocusedBorderColor = BlueGrotto
+            ),
             value = mobileNumber.value,
             modifier = Modifier.padding(vertical = 10.dp),
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone),
@@ -96,46 +113,17 @@ fun LoginScreen(
             text = "Log In",
         )
 
-        OSButton(
-            onClick = {
-                if (selectedOption.value == "User") navController.navigate(Routes.UserSignUp.route) {
-                    launchSingleTop = true
-                }
-                else navController.navigate(Routes.SellerSignUp.route) {
-                    launchSingleTop = true
-                }
-            },
-            text = "Sign Up",
+        ClickableText(
+            text = AnnotatedString("No account? Sign up here"),
+            modifier = Modifier.padding(15.dp),
+            onClick = { navController.navigate(Routes.SignUpOption.route) },
+            style = TextStyle(
+                fontSize = 14.sp,
+                textDecoration = TextDecoration.Underline,
+                color = BlueGrotto
+            )
         )
 
-
-        OSButton(
-            onClick = {
-                mainViewModel._customerListState.observe(
-                    navController.context as LifecycleOwner
-                ) {
-                    navController.navigate(Routes.UserList.route) {
-                        launchSingleTop = true
-                    }
-                }
-                mainViewModel.getAllCustomers()
-            },
-            text = "Show Customers",
-        )
-
-
-        OSButton(
-            onClick = {
-                mainViewModel._sellerListState.observe(
-                    navController.context as LifecycleOwner
-                ) {
-                    navController.navigate(Routes.SellerList.route) {
-                        launchSingleTop = true
-                    }
-                }
-                mainViewModel.getAllSeller()
-            }, text = "Show Sellers"
-        )
     }
 
     @Composable

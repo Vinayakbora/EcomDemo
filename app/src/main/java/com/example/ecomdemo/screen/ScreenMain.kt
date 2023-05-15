@@ -37,7 +37,7 @@ fun ScreenMain(mainViewModel: MainViewModel) {
         }
 
         composable(Routes.SignUpOption.route) {
-            SignUpOption(navController = navController)
+            SignUpOption(navController = navController, mainViewModel = mainViewModel)
         }
 
         composable(Routes.UserSignUp.route) {
