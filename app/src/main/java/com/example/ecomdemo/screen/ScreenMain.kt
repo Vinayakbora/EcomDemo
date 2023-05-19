@@ -74,7 +74,7 @@ fun ScreenMain(mainViewModel: MainViewModel) {
         }
 
         composable(Routes.SellerHome.route) {
-            SellerHomeScreen(mainViewModel = mainViewModel)
+            SellerHomeScreen(navController = navController,mainViewModel = mainViewModel)
         }
 
         composable(Routes.Cart.route) {

@@ -47,4 +47,20 @@ class Validation {
     fun validatePincode(pinCode: String): Boolean{
         return pinCode.isNotEmpty()
     }
+
+    fun validateProductName(pName: String): Boolean{
+        return pName.isNotEmpty()
+    }
+
+    fun validateProductPrice(pPrice: String): Boolean{
+        return pPrice.isNotEmpty()
+    }
+
+    fun validateProductCategory(pCategory: String): Boolean{
+        return pCategory.isNotEmpty()
+    }
+
+    fun validateProductDescription(pDescription: String): Boolean{
+        return pDescription.isNotEmpty()
+    }
 }

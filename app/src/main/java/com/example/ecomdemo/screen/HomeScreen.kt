@@ -11,6 +11,7 @@ import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -20,6 +21,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.example.ecomdemo.R
 import com.example.ecomdemo.Routes
+import com.example.ecomdemo.ui.theme.BlueGrotto
 import com.example.ecomdemo.ui.viewmodels.MainViewModel
 
 @Composable
@@ -41,34 +43,47 @@ fun TopBar(navController: NavHostController) {
     ) {
         Text(
             text = "PRODUCTS",
-            fontSize = 20.sp,
+            fontSize = 25.sp,
             textAlign = TextAlign.Center,
+            color = BlueGrotto,
             style = TextStyle(fontWeight = FontWeight.Bold),
-            modifier = Modifier
-                .padding(16.dp)
-                .wrapContentWidth()
+            modifier = Modifier.padding(16.dp).wrapContentWidth()
         )
         Row {
             IconButton(
-                onClick = { navController.navigate(Routes.Order.route) }
+                onClick = { navController.navigate(Routes.Order.route) },
+                modifier = Modifier.padding(vertical = 10.dp)
             ) {
                 Image(
                     painter = painterResource(R.drawable.orders),
                     contentDescription = null,
-                    modifier = Modifier
-                        .size(60.dp)
-                        .padding(16.dp)
+                    colorFilter = ColorFilter.tint(BlueGrotto),
+                    modifier = Modifier.size(30.dp)
                 )
             }
             IconButton(
-                onClick = { navController.navigate(Routes.Cart.route) }
+                onClick = { navController.navigate(Routes.Cart.route) },
+                modifier = Modifier.padding(vertical = 10.dp)
             ) {
                 Icon(
                     Icons.Filled.ShoppingCart,
                     contentDescription = null,
-                    modifier = Modifier
-                        .size(64.dp)
-                        .padding(16.dp)
+                    tint = BlueGrotto,
+                    modifier = Modifier.size(30.dp)
+                )
+            }
+            IconButton(
+                onClick = { navController.navigate(Routes.LoginScreen.route){
+                    popUpTo(Routes.Home.route) { inclusive = true }
+                    launchSingleTop = true }
+                },
+                modifier = Modifier.padding(vertical = 10.dp, horizontal = 5.dp)
+            ) {
+                Image(
+                    painter = painterResource(R.drawable.logout),
+                    contentDescription = null,
+                    colorFilter = ColorFilter.tint(BlueGrotto),
+                    modifier = Modifier.size(30.dp)
                 )
             }
         }
