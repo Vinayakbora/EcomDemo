@@ -17,6 +17,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.ecomdemo.data.db.entities.Seller
 import com.example.ecomdemo.R
+import com.example.ecomdemo.ui.theme.BlueGrotto
+import com.example.ecomdemo.ui.theme.DarkGrey
 
 
 @Composable
@@ -30,16 +32,16 @@ fun SellerListScreen(sellers: List<Seller>) {
 @Composable
 fun SellerListTopBar() {
     Row(
-        Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween
+        Modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.SpaceBetween
     ) {
         Text(
-            text = "Sellers",
-            fontSize = 20.sp,
+            text = "All Sellers",
+            fontSize = 25.sp,
             textAlign = TextAlign.Center,
+            color = BlueGrotto,
             style = TextStyle(fontWeight = FontWeight.Bold),
-            modifier = Modifier
-                .padding(16.dp)
-                .wrapContentWidth()
+            modifier = Modifier.padding(16.dp).wrapContentWidth()
         )
     }
 }
@@ -61,7 +63,7 @@ fun SellerList(sellers: List<Seller>) {
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Image(
-                        painter = painterResource(R.drawable.sellerpic),
+                        painter = painterResource(R.drawable.seller_contact),
                         contentDescription = "Product",
                         modifier = Modifier
                             .padding(16.dp)
@@ -70,14 +72,18 @@ fun SellerList(sellers: List<Seller>) {
                     Text(
                         text = seller.name ?: "",
                         fontSize = 15.sp,
-                        textAlign = TextAlign.Start,
+                        textAlign = TextAlign.Center,
                         style = TextStyle(fontWeight = FontWeight.Bold),
-                        modifier = Modifier.padding(0.dp, 16.dp, 20.dp, 10.dp)
+                        modifier = Modifier
+                            .padding(vertical = 10.dp, horizontal = 10.dp)
+                            .wrapContentHeight()
+                            .width(100.dp)
                     )
                     Column(horizontalAlignment = Alignment.CenterHorizontally) {
                         Text(
                             text = seller.address ?: "",
                             fontSize = 15.sp,
+                            color = DarkGrey,
                             textAlign = TextAlign.Center,
                             modifier = Modifier
                                 .padding(16.dp)
@@ -87,6 +93,7 @@ fun SellerList(sellers: List<Seller>) {
                             text = seller.contact ?: "",
                             textAlign = TextAlign.End,
                             fontSize = 15.sp,
+                            color = DarkGrey,
                             modifier = Modifier
                                 .padding(16.dp)
                                 .wrapContentWidth()

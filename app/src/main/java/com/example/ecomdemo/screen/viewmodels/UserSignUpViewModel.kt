@@ -72,7 +72,7 @@ class UserSignUpViewModel @Inject constructor(
 
         state.value = state.value.copy(
             showAlert = true,
-            message = if (isValid) USER_SUCCESS_MESSAGE else "Invalid Operations"
+            message = if (isValid) USER_SUCCESS_MESSAGE else "Please fill all the input fields"
         )
     }
 }

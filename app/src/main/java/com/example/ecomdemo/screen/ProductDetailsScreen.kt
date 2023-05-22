@@ -10,11 +10,15 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.ecomdemo.R
+import com.example.ecomdemo.ui.theme.BlueGrotto
+import com.example.ecomdemo.ui.theme.DarkGrey
 
 @Composable
 fun ProductDetailsScreen(productName: String) {
@@ -32,8 +36,9 @@ fun ProductDetailsScreen(productName: String) {
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
                 Text(
                     text = productName,
-                    style = TextStyle(fontWeight = FontWeight.Bold),
-                    fontSize = 20.sp,
+                    style = TextStyle(fontWeight = FontWeight.Bold, fontStyle = FontStyle.Italic),
+                    fontSize = 25.sp,
+                    color = BlueGrotto,
                     textAlign = TextAlign.Center,
                     modifier = Modifier.padding(vertical = 20.dp, horizontal = 20.dp)
                 )
@@ -57,10 +62,11 @@ fun ProductDetailsScreen(productName: String) {
                             "The device has a large 128GB storage capacity, providing plenty of " +
                             "space for your apps, music, photos, and videos.",
                     fontSize = 15.sp,
+                    color = DarkGrey,
+                    style = TextStyle(fontStyle = FontStyle.Italic, fontFamily = FontFamily.Serif),
                     textAlign = TextAlign.Center,
                     modifier = Modifier.padding(vertical = 20.dp, horizontal = 20.dp)
                 )
-
             }
         }
     }

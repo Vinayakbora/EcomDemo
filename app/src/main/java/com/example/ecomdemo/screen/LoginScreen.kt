@@ -28,6 +28,8 @@ import com.example.ecomdemo.Routes
 import com.example.ecomdemo.common.OSButton
 import com.example.ecomdemo.common.provideImageLoader
 import com.example.ecomdemo.ui.theme.BlueGrotto
+import com.example.ecomdemo.ui.theme.DarkGrey
+import com.example.ecomdemo.ui.theme.RoseRed
 import com.example.ecomdemo.ui.viewmodels.MainViewModel
 
 const val USER = "User"
@@ -145,16 +147,34 @@ fun LoginScreen(
 
     @Composable
     fun SimpleAlertDialog(message: String) {
-        AlertDialog(onDismissRequest = { },
-
+        AlertDialog(
+            onDismissRequest = { },
             confirmButton = {
                 TextButton(onClick = {
                     showDialog.value = false
                     alertMessage.value = ""
-                }) { Text(text = "OK") }
+                }) {
+                    Text(
+                        text = "OK",
+                        fontSize = 15.sp,
+                        color = RoseRed,
+                        style = TextStyle(fontWeight = FontWeight.Bold)
+                    )
+                }
             },
-
-            title = { Text(text = "Alert") }, text = { Text(text = message) })
+            title = { Text(
+                text = "Invalid Login Credentials",
+                fontSize = 20.sp,
+                color = RoseRed,
+                style = TextStyle(fontWeight = FontWeight.Bold))
+             },
+            text = { Text(
+                text = message,
+                fontSize = 15.sp,
+                color = DarkGrey,
+                style = TextStyle(fontWeight = FontWeight.Bold))
+            }
+        )
     }
 
     if (showDialog.value) {

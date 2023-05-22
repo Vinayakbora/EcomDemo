@@ -14,6 +14,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -46,7 +48,7 @@ fun TopBar(navController: NavHostController) {
             fontSize = 25.sp,
             textAlign = TextAlign.Center,
             color = BlueGrotto,
-            style = TextStyle(fontWeight = FontWeight.Bold),
+            style = TextStyle(fontWeight = FontWeight.Bold, fontStyle = FontStyle.Italic),
             modifier = Modifier.padding(16.dp).wrapContentWidth()
         )
         Row {
@@ -55,7 +57,7 @@ fun TopBar(navController: NavHostController) {
                 modifier = Modifier.padding(vertical = 10.dp)
             ) {
                 Image(
-                    painter = painterResource(R.drawable.orders),
+                    painter = painterResource(R.drawable.tick),
                     contentDescription = null,
                     colorFilter = ColorFilter.tint(BlueGrotto),
                     modifier = Modifier.size(30.dp)
@@ -69,7 +71,7 @@ fun TopBar(navController: NavHostController) {
                     Icons.Filled.ShoppingCart,
                     contentDescription = null,
                     tint = BlueGrotto,
-                    modifier = Modifier.size(30.dp)
+                    modifier = Modifier.size(35.dp)
                 )
             }
             IconButton(
@@ -113,25 +115,22 @@ fun ProductList(
                     Image(
                         painter = painterResource(R.drawable.mobile),
                         contentDescription = "Product",
-                        modifier = Modifier
-                            .padding(16.dp)
-                            .size(50.dp)
+                        modifier = Modifier.padding(16.dp).size(50.dp)
                     )
-                    Column {
+                    Column(modifier = Modifier.width(150.dp)) {
                         product.name?.let {
                             Text(
                                 text = it,
                                 style = TextStyle(fontWeight = FontWeight.Bold),
-                                modifier = Modifier.padding(0.dp, 16.dp, 20.dp, 10.dp)
+                                modifier = Modifier.padding(vertical = 15.dp).fillMaxWidth()
                             )
                         }
                         product.description?.let {
                             Text(
                                 text = it,
                                 fontSize = 12.sp,
-                                modifier = Modifier
-                                    .padding(vertical = 16.dp)
-                                    .width(110.dp)
+                                style = TextStyle(fontStyle = FontStyle.Italic, fontFamily = FontFamily.Serif),
+                                modifier = Modifier.padding(vertical = 10.dp).fillMaxWidth()
                             )
                         }
                     }

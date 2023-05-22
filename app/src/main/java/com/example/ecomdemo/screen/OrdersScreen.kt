@@ -10,11 +10,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.ecomdemo.model.Product
+import com.example.ecomdemo.ui.theme.BlueGrotto
 import com.example.ecomdemo.ui.theme.LightGreen1
 
 @Composable
@@ -32,12 +34,11 @@ fun OrderBar() {
     ) {
         Text(
             text = "MY ORDERS",
-            fontSize = 20.sp,
+            fontSize = 25.sp,
             textAlign = TextAlign.Center,
-            style = TextStyle(fontWeight = FontWeight.Bold),
-            modifier = Modifier
-                .padding(16.dp)
-                .wrapContentWidth()
+            color = BlueGrotto,
+            style = TextStyle(fontWeight = FontWeight.Bold, fontStyle = FontStyle.Italic),
+            modifier = Modifier.padding(16.dp).wrapContentWidth()
         )
     }
 }

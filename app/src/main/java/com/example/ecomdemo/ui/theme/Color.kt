@@ -28,5 +28,7 @@ val BlueViolet3 = Color(0xff8f98fd)
 val BlueViolet = Color(0xff6856B1)
 val RoseRed = Color(0xffFF2768)
 val DarkGrey = Color(0xff5A5A5A)
+val LightGrey = Color(0xffD3D3D3)
 val BlueGrotto = Color(0xff189AB4)
 val BlueGreen = Color(0xff75E6DA)
+

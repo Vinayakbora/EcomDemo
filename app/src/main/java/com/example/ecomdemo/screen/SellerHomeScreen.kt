@@ -23,11 +23,13 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.example.ecomdemo.R
 import com.example.ecomdemo.Routes
+import com.example.ecomdemo.common.OSText
 import com.example.ecomdemo.common.OSTextField
 import com.example.ecomdemo.common.Validation
 import com.example.ecomdemo.common.provideImageLoader
 import com.example.ecomdemo.data.db.entities.Product
 import com.example.ecomdemo.ui.theme.BlueGrotto
+import com.example.ecomdemo.ui.theme.DarkGrey
 import com.example.ecomdemo.ui.theme.RoseRed
 import com.example.ecomdemo.ui.viewmodels.MainViewModel
 
@@ -208,10 +210,28 @@ fun SellerHomeScreen(mainViewModel: MainViewModel, navController: NavHostControl
             confirmButton = {
                 TextButton(onClick = {
                     showAlertBox.value = false
-                }) { Text(text = "OK") }
+                }) {
+                    Text(
+                        text = "OK",
+                        fontSize = 15.sp,
+                        color = RoseRed,
+                        style = TextStyle(fontWeight = FontWeight.Bold)
+                    )
+                }
             },
-            title = { Text(text = "Invalid Operations", color = RoseRed) },
-            text = { Text(text = "All input fields should be filled") })
+            title = { Text(
+                text = "Invalid Operations",
+                fontSize = 20.sp,
+                color = RoseRed,
+                style = TextStyle(fontWeight = FontWeight.Bold))
+            },
+            text = { Text(
+                text = "All input fields should be filled",
+                fontSize = 15.sp,
+                color = DarkGrey,
+                style = TextStyle(fontWeight = FontWeight.Bold))
+            }
+        )
     }
 
     if (showAlertBox.value) {
@@ -222,107 +242,70 @@ fun SellerHomeScreen(mainViewModel: MainViewModel, navController: NavHostControl
 @Composable
 fun ProductItem(product: Product) {
     Card(
-        modifier = Modifier
-            .padding(8.dp)
-            .fillMaxWidth(), elevation = 5.dp
+        modifier = Modifier.padding(8.dp).fillMaxWidth(),
+        elevation = 5.dp
     ) {
         Column(
             modifier = Modifier.padding(8.dp)
         ) {
             Row(
-                Modifier
-                    .fillMaxWidth()
-                    .wrapContentHeight(),
+                Modifier.fillMaxWidth().wrapContentHeight(),
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                Text(
+                OSText(
                     text = "Product Name: ",
-                    fontSize = 15.sp,
-                    textAlign = TextAlign.Start,
                     style = TextStyle(fontWeight = FontWeight.Bold),
-                    modifier = Modifier
-                        .padding(10.dp)
-                        .wrapContentWidth()
+                    textAlign = TextAlign.Start
                 )
-                Text(
+                OSText(
                     text = product.name ?: "",
-                    fontSize = 15.sp,
-                    textAlign = TextAlign.End,
-                    modifier = Modifier
-                        .padding(10.dp)
-                        .wrapContentWidth()
+                    style = TextStyle(fontWeight = FontWeight.Normal),
+                    textAlign = TextAlign.End
                 )
             }
             Row(
-                Modifier
-                    .fillMaxWidth()
-                    .wrapContentHeight(),
+                Modifier.fillMaxWidth().wrapContentHeight(),
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                Text(
+                OSText(
                     text = "Product Price: ",
-                    fontSize = 15.sp,
-                    textAlign = TextAlign.Start,
                     style = TextStyle(fontWeight = FontWeight.Bold),
-                    modifier = Modifier
-                        .padding(10.dp)
-                        .wrapContentWidth()
+                    textAlign = TextAlign.Start
                 )
-                Text(
+                OSText(
                     text = "₹${product.price}",
-                    fontSize = 15.sp,
-                    textAlign = TextAlign.End,
-                    modifier = Modifier
-                        .padding(10.dp)
-                        .wrapContentWidth()
+                    style = TextStyle(fontWeight = FontWeight.Normal),
+                    textAlign = TextAlign.End
                 )
             }
             Row(
-                Modifier
-                    .fillMaxWidth()
-                    .wrapContentHeight(),
+                Modifier.fillMaxWidth().wrapContentHeight(),
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                Text(
+                OSText(
                     text = "Product Category: ",
-                    fontSize = 15.sp,
-                    textAlign = TextAlign.Start,
                     style = TextStyle(fontWeight = FontWeight.Bold),
-                    modifier = Modifier
-                        .padding(10.dp)
-                        .wrapContentWidth()
+                    textAlign = TextAlign.Start
                 )
-                Text(
+                OSText(
                     text = product.categoryName ?: "",
-                    fontSize = 15.sp,
-                    textAlign = TextAlign.End,
-                    modifier = Modifier
-                        .padding(10.dp)
-                        .wrapContentWidth()
+                    style = TextStyle(fontWeight = FontWeight.Normal),
+                    textAlign = TextAlign.End
                 )
             }
             Row(
-                Modifier
-                    .fillMaxWidth()
-                    .wrapContentHeight(),
+                Modifier.fillMaxWidth().wrapContentHeight(),
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                Text(
+                OSText(
                     text = "Product Description: ",
-                    fontSize = 15.sp,
-                    textAlign = TextAlign.Start,
                     style = TextStyle(fontWeight = FontWeight.Bold),
-                    modifier = Modifier
-                        .padding(10.dp)
-                        .wrapContentWidth()
+                    textAlign = TextAlign.Start
                 )
-                Text(
+                OSText(
                     text = product.description ?: "",
-                    fontSize = 15.sp,
-                    textAlign = TextAlign.End,
-                    modifier = Modifier
-                        .padding(10.dp)
-                        .wrapContentWidth()
+                    style = TextStyle(fontWeight = FontWeight.Normal),
+                    textAlign = TextAlign.End
                 )
             }
         }

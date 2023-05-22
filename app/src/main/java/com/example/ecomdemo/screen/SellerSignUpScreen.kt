@@ -22,6 +22,7 @@ import com.example.ecomdemo.common.provideImageLoader
 import com.example.ecomdemo.screen.events.SellerSignUpUiEvent
 import com.example.ecomdemo.screen.states.SellerSignUpUiState
 import com.example.ecomdemo.ui.theme.BlueGrotto
+import com.example.ecomdemo.ui.theme.DarkGrey
 import com.example.ecomdemo.ui.theme.SELLER_SUCCESS_MESSAGE
 
 @Composable
@@ -40,8 +41,18 @@ fun SellerSignUpScreen(
 
         if (state.showAlert)
             AlertDialog(
-                title = { Text(text = "Alert") },
-                text = { Text(text = state.message) },
+                title = { Text(
+                    text = "Alert",
+                    fontSize = 20.sp,
+                    color = DarkGrey,
+                    style = TextStyle(fontWeight = FontWeight.Bold))
+                 },
+                text = { Text(
+                    text = state.message,
+                    fontSize = 15.sp,
+                    color = DarkGrey,
+                    style = TextStyle(fontWeight = FontWeight.Normal))
+                 },
                 onDismissRequest = { onEvent(SellerSignUpUiEvent.DismissAlertDialog) },
                 confirmButton = {
                     TextButton(onClick = {
@@ -51,7 +62,13 @@ fun SellerSignUpScreen(
                         } else {
                             onEvent(SellerSignUpUiEvent.DismissAlertDialog)
                         }
-                    }) { Text(text = "OK") }
+                    }) {
+                        Text(
+                            text = "OK",
+                            fontSize = 15.sp,
+                            style = TextStyle(fontWeight = FontWeight.Bold)
+                        )
+                    }
                 },
             )
 

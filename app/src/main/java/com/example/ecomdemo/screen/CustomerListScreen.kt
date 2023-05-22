@@ -17,6 +17,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.ecomdemo.data.db.entities.Customer
 import com.example.ecomdemo.R
+import com.example.ecomdemo.ui.theme.BlueGrotto
+import com.example.ecomdemo.ui.theme.DarkGrey
 
 @Composable
 fun CustomerListScreen(customers: List<Customer>) {
@@ -33,13 +35,12 @@ fun CustomerListTopBar() {
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
         Text(
-            text = "Customers",
-            fontSize = 20.sp,
+            text = "All Customers",
+            fontSize = 25.sp,
             textAlign = TextAlign.Center,
+            color = BlueGrotto,
             style = TextStyle(fontWeight = FontWeight.Bold),
-            modifier = Modifier
-                .padding(16.dp)
-                .wrapContentWidth()
+            modifier = Modifier.padding(16.dp).wrapContentWidth()
         )
     }
 }
@@ -50,7 +51,7 @@ fun CustomerList(customers: List<Customer>) {
     LazyColumn {
         items(customers) { customer ->
             Card(
-                elevation = 3.dp,
+                elevation = 5.dp,
                 modifier = Modifier
                     .fillMaxWidth()
                     .wrapContentHeight()
@@ -61,8 +62,8 @@ fun CustomerList(customers: List<Customer>) {
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Image(
-                        painter = painterResource(R.drawable.userpic),
-                        contentDescription = "Product",
+                        painter = painterResource(R.drawable.user),
+                        contentDescription = "User",
                         modifier = Modifier
                             .padding(16.dp)
                             .size(50.dp)
@@ -72,14 +73,18 @@ fun CustomerList(customers: List<Customer>) {
                         fontSize = 15.sp,
                         textAlign = TextAlign.Start,
                         style = TextStyle(fontWeight = FontWeight.Bold),
-                        modifier = Modifier.padding(0.dp, 16.dp, 20.dp, 10.dp)
+                        modifier = Modifier
+                            .padding(vertical = 10.dp, horizontal = 10.dp)
+                            .wrapContentHeight()
+                            .width(100.dp)
                     )
                     Text(
                         text = customer.phoneNumber,
                         textAlign = TextAlign.End,
                         fontSize = 15.sp,
+                        color = DarkGrey,
                         modifier = Modifier
-                            .padding(16.dp)
+                            .padding(vertical = 10.dp, horizontal = 10.dp)
                             .wrapContentWidth()
                     )
                 }

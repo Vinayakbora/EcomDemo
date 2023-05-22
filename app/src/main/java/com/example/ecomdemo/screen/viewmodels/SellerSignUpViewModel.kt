@@ -68,7 +68,7 @@ class SellerSignUpViewModel
 
         state.value = state.value.copy(
             showAlert = true,
-            message = if (isValid) SELLER_SUCCESS_MESSAGE else "Invalid Operations"
+            message = if (isValid) SELLER_SUCCESS_MESSAGE else "Please fill all the input fields"
         )
     }
 }
